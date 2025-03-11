@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: test-env
 
     steps:
     - name: Step 1
@@ -16,6 +17,10 @@ jobs:
     - name: Step 2
       id: step2
       run: echo "test=world" >> "$GITHUB_OUTPUT"
+
+    - name: Do stuff
+      run: |
+        echo "${{ toJSON(vars.TEST_VARS) }}"
 
     - name: Conditional Step
       if: ${{ steps.step1.outputs.output1 }}
