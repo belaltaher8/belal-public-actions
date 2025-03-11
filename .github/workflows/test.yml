@@ -20,7 +20,15 @@ jobs:
 
     - name: Do stuff
       run: |
-        echo "${{ toJSON(vars) }}"
+        echo "${{ toJSON(vars) }}" | grep '^GITHUB_COPILOT_MCP_' | sed 's/^GITHUB_COPILOT_MCP_//' > output_file.txt
+        while IFS= read -r line; do
+          echo "$line=${{ secrets[$line] }}" >> $MY_SECRET
+        done < output_file.txt
+        if -n [[ $MY_SECRET ]]; then
+          echo "MY_SECRET is set"
+        else
+          echo "MY_SECRET is not set"
+        fi
 
     - name: Conditional Step
       if: ${{ steps.step1.outputs.output1 }}
