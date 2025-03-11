@@ -1,0 +1,25 @@
+name: "test workflow"
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Step 1
+      id: step1
+      run: echo "output1=true" >> "$GITHUB_OUTPUT"
+
+    - name: Step 2
+      id: step2
+      run: echo "test=world" >> "$GITHUB_OUTPUT"
+
+    - name: Conditional Step
+      if: ${{ steps.step1.outputs.output1 }}
+      run: echo "mcp output from step 1 is set to ${{ steps.step1.outputs.output1 }}"
+
+    - name: Use outputs from previous steps
+      run: echo "Step 2 output is set to ${{ steps.step2.outputs.test }}"
