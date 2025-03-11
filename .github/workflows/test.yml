@@ -20,7 +20,7 @@ jobs:
 
     - name: Do stuff
       run: |
-        echo "${{ toJSON(vars.TEST_VARS) }}"
+        echo "${{ toJSON(vars) }}"
 
     - name: Conditional Step
       if: ${{ steps.step1.outputs.output1 }}
